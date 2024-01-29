@@ -17,7 +17,7 @@ generateStories(count)
 generateStories(count, file)
 */
 
-public class Hallmark{
+public class Hallmark{ 
   private String[][] data;
   
   public Hallmark(String[][] dain){
