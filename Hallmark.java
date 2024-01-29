@@ -36,6 +36,7 @@ public class Hallmark{
 
   /**
    * Constructor with 2D array.
+   * @param dain Recieves data in the form of a 2D array and stores it to be mixed up into stories.
    */
   public Hallmark(String[][] dain){
     data = new String[dain.length][];
@@ -53,6 +54,8 @@ public class Hallmark{
 
   /**
    * Constructor with csv file name
+   * @param filename_in Recieves a csv file to convert into data.
+   * @throws IOException in the case of an error.
    */
   public Hallmark(String filename_in)throws IOException{
     File myFile = new File(filename_in);
@@ -138,7 +141,7 @@ public class Hallmark{
    * <p>Creates an array of randomized Hallmark story variations from the data array and writes to the input filename.type.
    * </p>
    * @param numStories Number of stories to generate.
-   * @param fileName filename.type to write to.
+   * @param filename filename.type to write to.
    * @return Array of randomized stories.
    * @since 1.0
    */
@@ -179,7 +182,7 @@ public class Hallmark{
    * @return Single generated story.
    * @since 1.0
    */
-  public static String coolMethod() {
+  public String coolMethod() {
     try{
       ProcessBuilder pb = new ProcessBuilder("python", "main.py");
       pb.redirectErrorStream(true);
@@ -197,12 +200,101 @@ public class Hallmark{
     return null;
   }
 
+
+  /**
+   * <p>Runs main.py that calls OpenRouter api to generate a short story using a LLM and outputs it to specified filename.type.
+   * </p>
+   * @param filename filename.type to write to.
+   * @return Single generated story.
+   * @since 1.0
+   */
+  public String coolMethod(String filename){
+    String rv = coolMethod();
+    FileWriter writer = null;
+    try{
+      writer = new FileWriter(filename);
+      writer.write(rv);
+      writer.flush();
+    } catch (IOException bad) {
+      bad.printStackTrace();
+    } finally {
+        try{
+          if (writer != null){
+            writer.close();
+          }
+        } catch (IOException bad) {
+            bad.printStackTrace();
+        }
+    }
+
+    return rv;
+  }
+
+
+  /**
+   * <p>Creates an array of generated Hallmark story variations by calling an LLM api.
+   * </p>
+   * @param numStories Number of stories to generate.
+   * @return Array of generated stories.
+   * @since 1.0
+   */
+  public String[] coolMethod(int numStories){
+    // String[] rvs = {"Once upon a time...","In a galaxy far far away..."};
+    // return rvs;
+    String[] retval = new String[numStories];
+    for (int ilovestories = 0; ilovestories < retval.length; ilovestories++){
+      String rv = coolMethod();
+
+      retval[ilovestories] = rv;
+    }
+    return retval;
+  }
+
+
+  /**
+   * <p>Creates an array of generated Hallmark story variations using an LLM api and writes to the input filename.type.
+   * </p>
+   * @param numStories Number of stories to generate.
+   * @param filename filename.type to write to.
+   * @return Array of generated stories.
+   * @since 1.0
+   */
+  public String[] coolMethod(int numStories, String filename){
+    String[] retval = coolMethod(numStories);
+
+    String write = "";
+    for (int i = 0; i < retval.length; i++){
+      write += "\"" + retval[i] + "\"," + "\n"; 
+    }
+    write = write.substring(0,write.length()-2);
+
+    FileOutputStream writer = null;
+    try{
+      writer =new FileOutputStream("/home/runner/Story-Generator-ESD24W-APCSA-CE-2/"+filename);
+
+      writer.write(write.getBytes());
+      writer.flush();
+    } catch (IOException bad) {
+      bad.printStackTrace();
+    } finally {
+        try{
+          if (writer != null){
+            writer.close();
+          }
+        } catch (IOException bad) {
+            bad.printStackTrace();
+        }
+    }
+
+
+    return retval;
+  }
   /**
    * <p>Scanner Prompt to keep java running until sumbit. Replit webview only runs while project is running?
    * </p>
    * @since 1.0
    */
-  
+  // javadoc -d /home/runner/Story-Generator-ESD24W-APCSA-CE-2/doc2 Hallmark.java
   // pushd /home/runner/Story-Generator-ESD24W-APCSA-CE-2/doc2;  python3 -m http.server 9999; pop
   public static void waitHM(){
     Scanner notDone = new Scanner(System.in);  
