@@ -39,10 +39,9 @@ class Main {
     System.out.println();
     System.out.println();
     System.out.println();
-    try{
-    ChristmasStory.coolMethod();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    System.out.println(ChristmasStory.coolMethod());
+    System.out.println();
+    ChristmasStory.waitHM();
+    
   }
 }

@@ -1,6 +1,16 @@
 import java.io.*;
 import java.util.*;
 import java.lang.ProcessBuilder;
+import java.util.Scanner;
+/**
+*Hallmark holds data to create story variations.
+*
+*@author Josh Ramirez
+*/
+
+
+
+
 
 /* implement the Hallmark class.
 // It should have a constructor that works as used in Main.
@@ -18,8 +28,15 @@ generateStories(count, file)
 */
 
 public class Hallmark{ 
+
+  /**
+   * Text available for story generation.
+   */
   private String[][] data;
-  
+
+  /**
+   * Constructor with 2D array.
+   */
   public Hallmark(String[][] dain){
     data = new String[dain.length][];
     for(int i = 0; i < dain.length; i++){
@@ -34,7 +51,9 @@ public class Hallmark{
   }
 
 
-  
+  /**
+   * Constructor with csv file name
+   */
   public Hallmark(String filename_in)throws IOException{
     File myFile = new File(filename_in);
     Scanner scan = new Scanner(myFile);
@@ -47,7 +66,12 @@ public class Hallmark{
   }
 
 
-  
+  /**
+   * <p>Creates randomized Hallmark story variation from the data array.
+   * </p>
+   * @return Single Randomized Story
+   * @since 1.0
+   */
   public String generateStory(){
     String rv = "";
     for (int r = 0; r < data.length; r++){
@@ -60,15 +84,19 @@ public class Hallmark{
   }
 
 
-  
+  /**
+   * <p>Creates randomized Hallmark story variation from the data array and outputs it to specified filename.type.
+   * </p>
+   * @param filename filename.type to write to.
+   * @return Single Randomized Story
+   * @since 1.0
+   */
   public String generateStory(String filename){
     String rv = generateStory();
-
-    FileOutputStream writer = null;
+    FileWriter writer = null;
     try{
-      writer =new FileOutputStream("/home/runner/Story-Generator-ESD24W-APCSA-CE-2/"+filename);
-
-      writer.write(rv.getBytes());
+      writer = new FileWriter(filename);
+      writer.write(rv);
       writer.flush();
     } catch (IOException bad) {
       bad.printStackTrace();
@@ -86,7 +114,13 @@ public class Hallmark{
   }
 
 
-  
+  /**
+   * <p>Creates an array of randomized Hallmark story variations from the data array.
+   * </p>
+   * @param numStories Number of stories to generate.
+   * @return Array of randomized stories.
+   * @since 1.0
+   */
   public String[] generateStories(int numStories){
     // String[] rvs = {"Once upon a time...","In a galaxy far far away..."};
     // return rvs;
@@ -100,7 +134,14 @@ public class Hallmark{
   }
 
 
-  
+  /**
+   * <p>Creates an array of randomized Hallmark story variations from the data array and writes to the input filename.type.
+   * </p>
+   * @param numStories Number of stories to generate.
+   * @param fileName filename.type to write to.
+   * @return Array of randomized stories.
+   * @since 1.0
+   */
   public String[] generateStories(int numStories, String filename){
     String[] retval = generateStories(numStories);
     
@@ -132,18 +173,42 @@ public class Hallmark{
     return retval;
   }
 
+  /**
+   * <p>Runs main.py that calls OpenRouter api to generate a short story using a LLM.
+   * </p>
+   * @return Single generated story.
+   * @since 1.0
+   */
+  public static String coolMethod() {
+    try{
+      ProcessBuilder pb = new ProcessBuilder("python", "main.py");
+      pb.redirectErrorStream(true);
+      Process pro = pb.start();
 
-  public void coolMethod()throws IOException{
-    ProcessBuilder pb = new ProcessBuilder("python", "main.py");
-    pb.redirectErrorStream(true);
-    Process pro = pb.start();
-
-    Reader reader = new InputStreamReader(pro.getInputStream());
-    BufferedReader bf = new BufferedReader(reader);
-    String s;
-    while ((s = bf.readLine()) != null){
-      System.out.println(s);
+      Reader reader = new       InputStreamReader(pro.getInputStream());
+      BufferedReader bf = new BufferedReader(reader);
+      String s;
+      while ((s = bf.readLine()) != null){
+        return s;
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    return null;
+  }
+
+  /**
+   * <p>Scanner Prompt to keep java running until sumbit. Replit webview only runs while project is running?
+   * </p>
+   * @since 1.0
+   */
+  
+  // pushd /home/runner/Story-Generator-ESD24W-APCSA-CE-2/doc2;  python3 -m http.server 9999; pop
+  public static void waitHM(){
+    Scanner notDone = new Scanner(System.in);  
+    System.out.println("Enter to finish:");
+
+    String alldonefornow = notDone.nextLine();
   }
   
 }
