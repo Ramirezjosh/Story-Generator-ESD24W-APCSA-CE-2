@@ -1,3 +1,4 @@
+import java.io.IOException;
 
 class Main {
   // think: https://wronghands1.files.wordpress.com/2019/11/hallmark-christmas-movie-plot-generator.jpg
@@ -34,5 +35,14 @@ class Main {
     System.out.println();
     System.out.println();
     System.out.println(ChristmasStory.generateStory("christmas.csv"));
+    System.out.println();
+    System.out.println();
+    System.out.println();
+    System.out.println();
+    try{
+    ChristmasStory.coolMethod();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

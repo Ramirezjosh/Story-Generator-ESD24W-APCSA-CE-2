@@ -62,13 +62,7 @@ public class Hallmark{
 
   
   public String generateStory(String filename){
-    String rv = "";
-    for (int r = 0; r < data.length; r++){
-      int c = (int) (Math.random() * data[r].length);
-      rv += data[r][c];
-      rv += " ";
-
-    }
+    String rv = generateStory();
 
     FileOutputStream writer = null;
     try{
@@ -98,13 +92,8 @@ public class Hallmark{
     // return rvs;
     String[] retval = new String[numStories];
     for (int ilovestories = 0; ilovestories < retval.length; ilovestories++){
-      String rv = "";
-      for (int r = 0; r < data.length; r++){
-        int c = (int) (Math.random() * data[r].length);
-        rv += data[r][c];
-        rv += " ";
-
-      }
+      String rv = generateStory();
+      
       retval[ilovestories] = rv;
     }
     return retval;
@@ -113,17 +102,7 @@ public class Hallmark{
 
   
   public String[] generateStories(int numStories, String filename){
-    String[] retval = new String[numStories];
-    for (int ilovestories = 0; ilovestories < retval.length; ilovestories++){
-      String rv = "";
-      for (int r = 0; r < data.length; r++){
-        int c = (int) (Math.random() * data[r].length);
-        rv += data[r][c];
-        rv += " ";
-
-      }
-      retval[ilovestories] = rv.substring(0,rv.length()-1);
-    }
+    String[] retval = generateStories(numStories);
     
     String write = "";
     for (int i = 0; i < retval.length; i++){
@@ -152,4 +131,19 @@ public class Hallmark{
     
     return retval;
   }
+
+
+  public void coolMethod()throws IOException{
+    ProcessBuilder pb = new ProcessBuilder("python", "main.py");
+    pb.redirectErrorStream(true);
+    Process pro = pb.start();
+
+    Reader reader = new InputStreamReader(pro.getInputStream());
+    BufferedReader bf = new BufferedReader(reader);
+    String s;
+    while ((s = bf.readLine()) != null){
+      System.out.println(s);
+    }
+  }
+  
 }
