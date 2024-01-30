@@ -16,7 +16,6 @@ class Main {
       {"with a sensitive guy in plaid,","with an old flame,","with some guy and his dog,","with a single dad and his precocious child,","The bad buy","with christmas, the town and some guy,"},
       {"and also the only old man in town might actually be the real Santa Claus."}};
     
-
     Hallmark ChristmasStory = new Hallmark(exampleData);
     exampleData[0][0] = "RUINED YOUR STORY"; // see, if you don't preserve your objects through class
     // constructors, bad things happen.

@@ -57,14 +57,33 @@ public class Hallmark{
    * @param filename_in Recieves a csv file to convert into data.
    * @throws IOException in the case of an error.
    */
-  public Hallmark(String filename_in)throws IOException{
-    File myFile = new File(filename_in);
-    Scanner scan = new Scanner(myFile);
-    ArrayList<ArrayList<String>> arr = new ArrayList<ArrayList<String>>();
-    int i = 0;
-    while (scan.hasNextLine()){
-      String line = scan.nextLine();
+  public Hallmark(String filename_in) {
+    String retval = "";
+    ArrayList<ArrayList<String>> retarr = new ArrayList<ArrayList<String>>();
+    
+    try{
+      File myFile = new File(filename_in);
+      Scanner scan = new Scanner(myFile);
+      int i = 0;
+      while (scan.hasNextLine()){
+        retarr.add(new ArrayList<String>());
+        String line = scan.nextLine();
+        int index = line.indexOf(",");
+        while (index != -1){
+          index = line.indexOf(",");
+          
+        }
+        retval += line + "|";
+        i++;
+      }
+    
       
+      
+      
+      
+      data = new String[][]{{retval}};
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
@@ -297,10 +316,19 @@ public class Hallmark{
   // javadoc -d /home/runner/Story-Generator-ESD24W-APCSA-CE-2/doc2 Hallmark.java
   // pushd /home/runner/Story-Generator-ESD24W-APCSA-CE-2/doc2;  python3 -m http.server 9999; pop
   public static void waitHM(){
+    // try{
+
+      
+    // Process pro = Runtime.getRuntime().exec("bash -c 'pushd /home/runner/Story-Generator-ESD24W-APCSA-CE-2/doc2;  python3 -m http.server 9999; pop'");
+    // System.out.println("Server Started");
     Scanner notDone = new Scanner(System.in);  
     System.out.println("Enter to finish:");
 
     String alldonefornow = notDone.nextLine();
-  }
+    // pro.destroy();
+    // } catch (IOException e){
+      // e.printStackTrace();
+    // }
+  } 
   
 }
